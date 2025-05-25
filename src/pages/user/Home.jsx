@@ -1,9 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronRight, DollarSign, Filter, Grid, Search, ShoppingCart, Star, TrendingUp } from 'lucide-react';
+import { ChevronRight, DollarSign, Filter, Search, } from 'lucide-react';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import BarberCard from '../../components/user/BarberCard';
-import ProductCard from '../../components/user/ProductCard';
 
 const Home = () => {
+    const [activeFilter, setActiveFilter] = useState('all');
+    const [showInspirations, setShowInspirations] = useState(false);
+
     const mockBarbers = [
         {
             id: 1,
@@ -138,11 +142,9 @@ const Home = () => {
             bookedNumbers: [],
             currentQueueNumber: null,
         },
-    ]
+    ];
 
-
-
-    // Hair style inspiration images
+   
     const hairStyles = [
         {
             id: 1,
@@ -180,98 +182,48 @@ const Home = () => {
             image: "/placeholder.svg?height=300&width=250",
             popularity: "Classic",
         },
-    ]
+    ];
 
-    // Mock products data
-    const mockProducts = [
-        {
-            id: 1,
-            name: "Premium Hair Pomade",
-            price: 24.99,
-            rating: 4.7,
-            reviews: 128,
-            image: "/placeholder.svg?height=200&width=200",
-            category: "Styling",
-            bestseller: true,
-        },
-        {
-            id: 2,
-            name: "Beard Oil - Sandalwood",
-            price: 19.99,
-            rating: 4.8,
-            reviews: 95,
-            image: "/placeholder.svg?height=200&width=200",
-            category: "Beard Care",
-            bestseller: true,
-        },
-        {
-            id: 3,
-            name: "Professional Hair Scissors",
-            price: 49.99,
-            rating: 4.9,
-            reviews: 64,
-            image: "/placeholder.svg?height=200&width=200",
-            category: "Tools",
-            bestseller: false,
-        },
-        {
-            id: 4,
-            name: "Styling Clay - Matte Finish",
-            price: 22.99,
-            rating: 4.6,
-            reviews: 112,
-            image: "/placeholder.svg?height=200&width=200",
-            category: "Styling",
-            bestseller: false,
-        },
-        {
-            id: 5,
-            name: "Beard Brush & Comb Set",
-            price: 29.99,
-            rating: 4.8,
-            reviews: 87,
-            image: "/placeholder.svg?height=200&width=200",
-            category: "Beard Care",
-            bestseller: true,
-        },
-        {
-            id: 6,
-            name: "Aftershave Balm - Cooling",
-            price: 18.99,
-            rating: 4.5,
-            reviews: 76,
-            image: "/placeholder.svg?height=200&width=200",
-            category: "Skincare",
-            bestseller: false,
-        },
-    ]
+
     return (
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2'>
-            <div className="container mx-auto px-4 pt-6 pb-24">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+            <div className="px-4 pt-6 pb-20 md:pb-5">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8"
+                >
                     <div>
-                        <h3 className='font-bold text-3xl'>Explore Barbers Near You</h3>
-                        <p className="">Welcome back, Hello</p>
+                        <h3 className='font-bold text-3xl text-[#323232]'>Explore Barbers Near You</h3>
+                        <p className="text-xl text-[#474545]">Welcome back, Hello</p>
                     </div>
-                </div>
+                </motion.div>
 
                 <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
                     className="relative overflow-hidden rounded-xl bg-[#323232] p-6 mb-6 text-white/80"
                 >
                     <div className="flex flex-col md:flex-row items-center justify-between">
                         <div className="mb-4 md:mb-0">
-                            <h2 className="text-xl font-bold mb-2">💈 Style Inspirations</h2>
-                            <p className=" mb-4">Check out trending hairstyles for your next visit</p>
-                            <button
-                                className="px-4 py-2 bg-white text-purple-700 rounded-lg hover:bg-purple-50 transition-colors"
+                            <h2 className="text-xl font-bold mb-2 text-[#DDD0C8]">💈 Style Inspirations</h2>
+                            <p className="mb-4 text-[#C2BEB5]">Check out trending hairstyles for your next visit</p>
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => setShowInspirations(!showInspirations)}
+                                className="px-4 py-2 bg-[#DDD0C8] text-[#323232] rounded-lg hover:bg-[#C2BEB5] transition-colors font-medium"
                             >
-                            </button>
+                                {showInspirations ? 'Hide Styles' : 'View Styles'}
+                            </motion.button>
                         </div>
                         <div className="flex -space-x-4">
                             {hairStyles.slice(0, 3).map((style, index) => (
                                 <div
                                     key={style.id}
-                                    className="w-16 h-16 rounded-full border-2 border-white overflow-hidden"
+                                    className="w-16 h-16 rounded-full border-2 border-[#DDD0C8] overflow-hidden"
                                     style={{ zIndex: 3 - index }}
                                 >
                                     <img
@@ -284,122 +236,117 @@ const Home = () => {
                         </div>
                     </div>
 
-                    {/* Hair Inspiration Gallery */}
+         
                     <AnimatePresence>
-                        {false && <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="mt-6 overflow-hidden"
-                        >
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                {hairStyles.map((style) => (
-                                    <motion.div
-                                        key={style.id}
-                                        whileHover={{ y: -5 }}
-                                        className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden relative"
-                                    >
-                                        <img
-                                            src={style.image || "/placeholder.svg"}
-                                            alt={style.name}
-                                            className="w-full h-40 object-cover"
-                                        />
-                                        <div className="p-3">
-                                            <h3 className="font-medium text-white">{style.name}</h3>
-                                            <span className="inline-block px-2 py-1 mt-1 text-xs rounded-full bg-white/20">
-                                                {style.popularity}
-                                            </span>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.div>}
-
+                        {showInspirations && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="mt-6 overflow-hidden"
+                            >
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                    {hairStyles.map((style) => (
+                                        <motion.div
+                                            key={style.id}
+                                            whileHover={{ y: -5 }}
+                                            className="bg-white/10 backdrop-blur-sm rounded-lg overflow-hidden relative"
+                                        >
+                                            <img
+                                                src={style.image || "/placeholder.svg"}
+                                                alt={style.name}
+                                                className="w-full h-40 object-cover"
+                                            />
+                                            <div className="p-3">
+                                                <h3 className="font-medium text-[#DDD0C8]">{style.name}</h3>
+                                                <span className="inline-block px-2 py-1 mt-1 text-xs rounded-full bg-[#DDD0C8] text-[#323232]">
+                                                    {style.popularity}
+                                                </span>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        )}
                     </AnimatePresence>
 
-                    <div className="absolute -right-12 -top-12 w-40 h-40 rounded-full bg-white/10 blur-xl"></div>
-                    <div className="absolute -left-12 -bottom-12 w-40 h-40 rounded-full bg-white/10 blur-xl"></div>
+                    <div className="absolute -right-12 -top-12 w-40 h-40 rounded-full bg-[#DDD0C8]/10 blur-xl"></div>
+                    <div className="absolute -left-12 -bottom-12 w-40 h-40 rounded-full bg-[#DDD0C8]/10 blur-xl"></div>
                 </motion.div>
 
-                {/* Search and Filter */}
+    
                 <motion.div
-                    className=" py-5">
-                    <div className="flex flex-col md:flex-row md:items-center gap-4">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="py-5">
+                    <div className="w-full flex flex-col md:flex-row md:items-center gap-4">
+                        <div className="relative w-full md:w-1/2">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#323232]" />
                             <input
                                 type="text"
                                 placeholder="Search salons..."
-
-                                className="w-full pl-10 pr-4 py-2 border-2  rounded-lg  text-[#323232] focus:outline-none "
+                                className="w-full pl-10 pr-4 py-2 border-2 border-[#C2BEB5] rounded-lg bg-[#f5f0ea] text-[#323232] focus:outline-none focus:border-[#323232] transition-colors"
                             />
                         </div>
-                      
 
-                        <div className=" flex space-x-2 overflow-x-auto pb-2 md:pb-0">
-                            <button
-                                className={`px-3 py-1.5 rounded-lg text-sm whitespace-nowrap `}
+                        <div className="md:w-1/2 w-full flex space-x-2 overflow-x-auto pb-2 md:pb-0 md:place-content-end">
+                            <motion.button
+                            
+                                onClick={() => setActiveFilter('all')}
+                                className={`px-3 py-1.5 rounded-lg text-sm whitespace-nowrap transition-colors ${activeFilter === 'all'
+                                        ? 'bg-[#323232] text-[#DDD0C8]'
+                                        : 'bg-[#f5f0ea] text-[#323232] border border-[#C2BEB5] hover:bg-[#e5dfd7]'
+                                    }`}
                             >
-                                <Grid className="w-4 h-4 inline-block mr-1" />
                                 All
-                            </button>
-                            <button
-                                className={`px-3 py-1.5 rounded-lg text-sm whitespace-nowrap `}
+                            </motion.button>
+                            <motion.button
+                          
+                                onClick={() => setActiveFilter('popular')}
+                                className={`px-3 py-1.5 rounded-lg text-sm whitespace-nowrap transition-colors ${activeFilter === 'popular'
+                                        ? 'bg-[#323232] text-[#DDD0C8]'
+                                        : 'bg-[#f5f0ea] text-[#323232] border border-[#C2BEB5] hover:bg-[#e5dfd7]'
+                                    }`}
                             >
-                                <TrendingUp className="w-4 h-4 inline-block mr-1" />
                                 Popular
-                            </button>
-                            <button
-                                className={`px-3 py-1.5 rounded-lg text-sm whitespace-nowrap `}
+                            </motion.button>
+                            <motion.button
+                              
+                                onClick={() => setActiveFilter('price')}
+                                className={`px-3 py-1.5 rounded-lg text-sm whitespace-nowrap transition-colors ${activeFilter === 'price'
+                                        ? 'bg-[#323232] text-[#DDD0C8]'
+                                        : 'bg-[#f5f0ea] text-[#323232] border border-[#C2BEB5] hover:bg-[#e5dfd7]'
+                                    }`}
                             >
-                                <DollarSign className="w-4 h-4 inline-block mr-1" />
                                 Price: High to Low
-                            </button>
+                            </motion.button>
                         </div>
                     </div>
                 </motion.div>
 
-                {/* Barber List */}
+               
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-5">
-                    {mockBarbers.map((barber) => (
+                    {mockBarbers.map((barber, index) => (
                         <motion.div
                             key={barber.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
                             whileHover={{ y: -5 }}
-                            className="bg-[#323232] text-amber-400 rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all cursor-pointer"
+                            className="bg-[#323232] rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all cursor-pointer "
                         >
-                            <BarberCard barber={barber} />
+                            <NavLink to="/salon-page">
+                                <BarberCard barber={barber} />
+                            </NavLink>
                         </motion.div>
                     ))}
                 </div>
 
-                {/* Products Section */}
-                <motion.div
-                    className="mt-12">
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-2xl font-bold ">Lifestyle Products</h2>
-                        <button className="text-[#323232] text-sm font-medium flex items-center">
-                            View All <ChevronRight className="w-4 h-4 ml-1" />
-                        </button>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {mockProducts.map((product) => (
-                            <motion.div
-                                key={product.id}
-                                whileHover={{ y: -5 }}
-                                className="bg-[#323232] border-[#C2BEB5]  rounded-xl shadow-sm overflow-hidden"
-                            >
-                                <ProductCard product={product} />
-                            </motion.div>
-                        ))}
-                    </div>
-                </motion.div>
-
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;
