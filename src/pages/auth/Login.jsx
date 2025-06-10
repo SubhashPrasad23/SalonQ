@@ -1,23 +1,30 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+const Login = () => {
     const [email, setEmail] = useState('');
+    const navigate = useNavigate();
+
+    const navigateHandler = () => {
+        navigate("/dashboard-barber")
+    }
 
     return (
-        <div className="h-full w-full flex flex-col items-center justify-center  px-4 py-5">
-
-
+        <div className="h-screen w-full bg-[#DDD0C8] text-[#323232] flex flex-col items-center justify-center  px-4 py-5">
             <motion.div
-                className="w-full max-w-md bg-white rounded-3xl shadow-sm border border-gray-100 p-8"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
+                className="w-full max-w-md bg-[#323232] rounded-3xl shadow-sm border border-gray-100 p-8"
+                initial={{ opacity: 0, z: 30 }}
+                animate={{ opacity: 1, z: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
             >
-                <motion.button
-                    className="w-full py-3 px-4 bg-white border border-gray-300 rounded-lg flex items-center justify-center gap-3 text-gray-700 hover:bg-gray-50 transition-colors mb-6"
-                    whileHover={{ y: -2, boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
-                    whileTap={{ y: 0, boxShadow: 'none' }}
+                <h2 className="relative text-3xl font-serif text-[#DDD0C8] text-center py-1 tracking-widest mb-5">
+                    Salon<span className="font-semibold ">Q</span>
+                </h2>
+
+                <motion.button onClick={navigateHandler}
+                    className="w-full py-3 px-4 bg-[#DDD0C8]  rounded-lg cursor-pointer flex items-center justify-center gap-3 text-gray-700 hover:bg-white/80 transition-colors mb-6"
+                    whileTap={{ scale: 0.98 }}
                 >
                     <svg width="18" height="18" viewBox="0 0 18 18">
                         <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.88-1.6 2.44v2.03h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-1.03-.15-1.61Z"></path>
@@ -28,23 +35,22 @@ export default function Login() {
                     <span className="font-medium">Continue with Google</span>
                 </motion.button>
 
-                <div className="flex items-center justify-center my-6">
+                <div className="w-10 mx-auto my-6 bg-white/80 text-center rounded-full place-content-center p-2">
                     <span className="text-sm font-medium text-gray-500">OR</span>
                 </div>
 
                 <div className="mb-4">
                     <input
                         type="email"
-                        placeholder="Enter your personal or work email"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                        placeholder="Enter your email"
+                        className="w-full px-4 py-3 border text-white border-gray-300 rounded-lg  focus:outline-none focus:ring-2 focus:ring-gray-200"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
 
                 <motion.button
-                    className="w-full py-3 px-4 bg-gray-900 text-white rounded-lg font-medium"
-                    whileHover={{ backgroundColor: "#111" }}
+                    className="w-full py-3 px-4 bg-[#DDD0C8]  rounded-lg cursor-pointer flex items-center justify-center gap-3 text-gray-700 hover:bg-white/80 transition-colors "
                     whileTap={{ scale: 0.98 }}
                 >
                     Continue with email
@@ -55,3 +61,6 @@ export default function Login() {
         </div>
     );
 }
+
+
+export default Login

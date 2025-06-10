@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Home, User, Briefcase, Menu, X, LogOut, Calendar, Settings } from 'lucide-react';
+import { MapPin, Home, User, Briefcase,  LogOut, Calendar, } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -11,7 +11,9 @@ const Navbar = () => {
         e.preventDefault();
         setAccountPopup(!accountPopup);
     };
-
+   const logOutHandler=()=>{
+navigate("/login")
+   }
     return (
         <>
             <nav className="sticky top-0 z-50 bg-[#DDD0C8]  p-2">
@@ -56,7 +58,7 @@ const Navbar = () => {
                                                 </NavLink>
                                                
                                                 <div className="border-t border-[#C2BEB5]"></div>
-                                                <button className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-[#e5dfd7] transition-colors">
+                                                <button onClick={logOutHandler} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-[#e5dfd7] transition-colors">
                                                     <LogOut size={16} className="inline mr-2" />
                                                     Sign out
                                                 </button>
